@@ -3,8 +3,18 @@
   if (window.BlumAC) return;
   window.BlumAC = true;
 
+  const autoPlay = false;
   const c = [208, 216, 0];
   const t = 5;
+
+  if (autoPlay) {
+    setInterval(() => {
+      const playButton = document.querySelector("button.is-primary, .play-btn");
+      if (!playButton) return;
+      if (!playButton.textContent.toLowerCase().includes("play")) return;
+      playButton.click();
+    }, 5000)
+  }
 
   setInterval(() => {
     const canvas = document.querySelector("canvas");
