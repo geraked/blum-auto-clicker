@@ -3,8 +3,8 @@
   if (window.BlumAC) return;
   window.BlumAC = true;
 
-  const autoPlay = false;
-  const c = [208, 216, 0];
+  const autoPlay = true;
+  const gc = [208, 216, 0];
   const t = 5;
 
   if (autoPlay) {
@@ -18,10 +18,10 @@
 
   setInterval(() => {
     const canvas = document.querySelector("canvas");
-    if (canvas) findAndClickGreenObjects(canvas);
+    if (canvas) findAndClickObjects(canvas);
   }, 100);
 
-  function findAndClickGreenObjects(screenCanvas) {
+  function findAndClickObjects(screenCanvas) {
     const context = screenCanvas.getContext('2d');
     const width = screenCanvas.width;
     const height = screenCanvas.height;
@@ -30,13 +30,16 @@
 
     for (let x = 0; x < width; x += 1) {
       for (let y = 0; y < height; y += 1) {
+        if (y < 70) continue;
+
         const index = (y * width + x) * 4;
         const r = pixels[index];
         const g = pixels[index + 1];
         const b = pixels[index + 2];
-        const greenishRange = (c[0] - t < r && r < c[0] + t) && (c[1] - t < g && g < c[1] + t) && (c[2] - t < b && b < c[2] + t);
 
-        if (greenishRange) {
+        const greenRange = (gc[0] - t < r && r < gc[0] + t) && (gc[1] - t < g && g < gc[1] + t) && (gc[2] - t < b && b < gc[2] + t);
+
+        if (greenRange) {
           simulateClick(screenCanvas, x, y);
         }
       }
